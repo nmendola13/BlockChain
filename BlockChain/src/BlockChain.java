@@ -25,7 +25,7 @@ public class BlockChain {
   }
 
   public boolean removeLast(){
-
+    
   }
 
   public Hash getHash() {
@@ -43,5 +43,5 @@ public class BlockChain {
   public String toString(){
 
   }
-  
+
 }
