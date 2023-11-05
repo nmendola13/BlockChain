@@ -7,6 +7,12 @@ public class BlockChain {
   public static class Node {
     Block data;
     Node nextNode;
+
+    public Node(Block data, Node prevNode) {
+      Block newData;
+      prevNode.nextNode = this;
+    }
+    
   }
 
   public BlockChain (int initial){
@@ -16,12 +22,17 @@ public class BlockChain {
   }
 
   public Block mine(int amount){
-    Block 
-    last.nextNode = 
+    Block newBlock = new Block(amount, amount, getHash(), amount);
+    last.nextNode = new Node(newBlock, last);
+    return newBlock;
   }
 
   public int getSize(){
-
+    int i = 1;
+    while (this.nextNode =! null) {
+      this.nextNode = this;
+      i++;
+    }
   }
 
   public void append(Block blk){
