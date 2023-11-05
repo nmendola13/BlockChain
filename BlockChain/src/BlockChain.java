@@ -5,15 +5,19 @@ public class BlockChain {
   Node last;
 
   public static class Node {
-
+    Block data;
+    Node nextNode;
   }
 
   public BlockChain (int initial){
-
+    Block firstBlock = new Block(0, initial, getHash());
+    this.first.data = firstBlock;
+    this.last.data = firstBlock;
   }
 
   public Block mine(int amount){
-
+    Block 
+    last.nextNode = 
   }
 
   public int getSize(){
@@ -25,7 +29,7 @@ public class BlockChain {
   }
 
   public boolean removeLast(){
-    
+
   }
 
   public Hash getHash() {
