@@ -23,7 +23,7 @@ public class BlockChain {
 
   public Block mine(int amount){
     Block newBlock = new Block(amount, amount, getHash(), amount);
-    last.nextNode = new Node(newBlock, last);
+    Node newNode = new Node(newBlock, last);
     return newBlock;
   }
 
@@ -33,22 +33,31 @@ public class BlockChain {
       this.nextNode = this;
       i++;
     }
+    return i;
   }
 
   public void append(Block blk){
-
+    Node newNode = new Node(blk, last);
   }
 
   public boolean removeLast(){
-
+    if (first.equals(last)) {
+      return false;
+    }
+    else {
+      //implement remove last
+      return true;
+    }
   }
 
   public Hash getHash() {
-
+    return last.data.getHash();
   }
 
   public boolean isValidBlockChain(){
-
+    while (this.next =! null) {
+      
+    }
   }
 
   public void printBalances(){
