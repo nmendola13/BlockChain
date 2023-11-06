@@ -1,7 +1,11 @@
 package BlockChain.src;
 
+import java.nio.ByteBuffer;
+
 /** 
- * 
+ * The data contained in each node of the blockchain. Note that the
+ * block itself does not contain links to other blocks in the chain;
+ * instead, the block will be wrapped in a Node class with the links.
  * 
  * @author Noah Mendola and Albert-Kenneth Okine
  */
@@ -20,7 +24,7 @@ public class Block {
 
   /** 
    * Creates a new block from the specified parameters, performing the
-   * mining operation to discover the nonce and has for this block given
+   * mining operation to discover the nonce and hash for this block given
    * these parameters.
    */
   public Block (int num, int amount, Hash prevHash) {
@@ -28,8 +32,10 @@ public class Block {
     this.num = num;
     this.amount = amount;
     this.prevHash = prevHash;
-    // Determine the hash of the block and set it.
-    this.hash = new Hash();
+    // Based on the parameters, determine the hash of the block and set it.
+    this.hash = new Hash(ByteBuffer.allocate(4)
+                                   .putInt(this.amount)
+                                   .array());
   } // Block(int, int, Hash)
 
   /** 
@@ -44,8 +50,10 @@ public class Block {
     this.amount = amount;
     this.prevHash = prevHash;
     this.nonce = nonce;
-    // Determine the has of the block and set it.
-    this.hash = new Hash();
+    // Based on the parameters, determine the hash of the block and set it.
+    this.hash = new Hash(ByteBuffer.allocate(4)
+                                   .putInt(this.amount)
+                                   .array());
   } // Block(int, int, Hash, long)
 
   /** 
