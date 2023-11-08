@@ -1,7 +1,11 @@
 package BlockChain.src;
 
+import java.nio.ByteBuffer;
+
 /** 
- * 
+ * The data contained in each node of the blockchain. Note that the
+ * block itself does not contain links to other blocks in the chain;
+ * instead, the block will be wrapped in a Node class with the links.
  * 
  * @author Noah Mendola and Albert-Kenneth Okine
  */
@@ -20,7 +24,7 @@ public class Block {
 
   /** 
    * Creates a new block from the specified parameters, performing the
-   * mining operation to discover the nonce and has for this block given
+   * mining operation to discover the nonce and hash for this block given
    * these parameters.
    */
   public Block (int num, int amount, Hash prevHash) {
@@ -28,8 +32,8 @@ public class Block {
     this.num = num;
     this.amount = amount;
     this.prevHash = prevHash;
-    // Determine the hash of the block and set it.
-    this.hash = new Hash();
+    // Based on the parameters, determine the hash of the block and set it.
+    this.mine();
   } // Block(int, int, Hash)
 
   /** 
@@ -44,9 +48,27 @@ public class Block {
     this.amount = amount;
     this.prevHash = prevHash;
     this.nonce = nonce;
-    // Determine the has of the block and set it.
-    this.hash = new Hash();
+    // Based on the parameters, determine the hash of the block and set it.
+    this.hash = new Hash(ByteBuffer.allocate(4)
+                                   .putInt(this.amount)
+                                   .putLong(this.nonce)
+                                   .array());
   } // Block(int, int, Hash, long)
+
+  /** 
+   * Determine the hash of the block based on the amount and nonce, then
+   * set both to the appropriate values.
+   */
+  public void mine() {
+    this.nonce = 0L; // initialize the nonce to 0;
+    do { // Iterate through all possible nonces, then set the new hash.
+      this.hash = new Hash(ByteBuffer.allocate(4)
+                                    .putInt(this.amount)
+                                    .putLong(this.nonce)
+                                    .array());
+    // Do this until we either find a valid hash, or have no more nonces.
+    } while ((!this.hash.isValid()) && ((this.nonce++) < Long.MAX_VALUE));
+  } // mine()
 
   /** 
    * Returns the number of this block.
@@ -95,5 +117,7 @@ public class Block {
       "Block %d (Amount: %d, Nonce: %d, prevHash: %s, hash: %s)",
       this.num, this.amount, this.prevHash, this.hash);
   } // toString()
+
+  
 
 } // class Block
